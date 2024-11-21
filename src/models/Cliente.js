@@ -8,11 +8,13 @@ class Cliente extends Usuario {
   }
 
   visualizarHistoricoDeContratos() {
-    // Implementação para visualizar histórico de contratos
+    console.log(`Exibindo histórico de contratos do cliente ${this.nome}.`);
+    // Lógica para buscar e exibir contratos do cliente
   }
 
-  enviarFeedback() {
-    // Implementação para enviar feedback
+  enviarFeedback(feedback) {
+    console.log(`Feedback enviado: ${feedback}`);
+    // Adicionar lógica para salvar feedback
   }
 }
 

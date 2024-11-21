@@ -1,13 +1,14 @@
 class SistemaDeAutenticacao {
-    verificarLogin(email, senha) {
-      // Implementação para verificar login
-      return true;  // Exemplo
-    }
-  
-    enviarEmailConfirmacao(email) {
-      // Implementação para enviar email de confirmação
-    }
+  verificarLogin(email, senha) {
+    console.log(`Verificando login para ${email}`);
+    // Lógica para autenticação
+    return true; // Exemplo
   }
-  
-  module.exports = SistemaDeAutenticacao;
-  
+
+  enviarEmailConfirmacao(email) {
+    console.log(`E-mail de confirmação enviado para ${email}`);
+    // Lógica para envio de e-mail
+  }
+}
+
+module.exports = SistemaDeAutenticacao;

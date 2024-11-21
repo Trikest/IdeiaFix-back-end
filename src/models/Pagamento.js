@@ -10,11 +10,12 @@ class Pagamento {
   }
 
   realizarPagamento() {
-    // Implementação para realizar o pagamento
+    this.status = 'pago';
+    console.log(`Pagamento de R$${this.valor} realizado com sucesso.`);
   }
 
   emitirNotaFiscal() {
-    // Implementação para emitir nota fiscal
+    console.log(`Nota fiscal emitida para o pagamento de R$${this.valor}.`);
   }
 }
 

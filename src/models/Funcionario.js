@@ -7,15 +7,18 @@ class Funcionario extends Usuario {
   }
 
   gerenciarAgendamentos() {
-    // Implementação para gerenciar agendamentos
+    console.log(`Gerenciando agendamentos...`);
+    // Lógica para listar ou alterar agendamentos
   }
 
   analisarFeedback() {
-    // Implementação para analisar feedback
+    console.log(`Analisando feedback de clientes...`);
+    // Lógica para análise de feedbacks
   }
 
-  gerarRelatorios() {
-    // Implementação para gerar relatórios
+  gerarRelatorios(tipo) {
+    console.log(`Relatório ${tipo} gerado com sucesso.`);
+    // Adicionar lógica para geração de relatórios
   }
 }
 
