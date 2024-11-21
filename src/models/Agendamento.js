@@ -11,15 +11,18 @@ class Agendamento {
   }
 
   confirmar() {
-    // Implementação para confirmar agendamento
+    this.status = 'confirmado';
+    console.log(`Agendamento confirmado para ${this.data}.`);
   }
 
   cancelar() {
-    // Implementação para cancelar agendamento
+    this.status = 'cancelado';
+    console.log(`Agendamento cancelado.`);
   }
 
-  alterarData() {
-    // Implementação para alterar a data
+  alterarData(novaData) {
+    this.data = novaData;
+    console.log(`Data do agendamento alterada para ${novaData}.`);
   }
 }
 

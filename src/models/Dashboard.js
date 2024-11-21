@@ -1,22 +1,24 @@
 class Dashboard {
-    constructor(id, relatorios, notificacoes) {
-      this.id = id;
-      this.relatorios = relatorios;
-      this.notificacoes = notificacoes;
-    }
-  
-    gerarRelatorioDeContratacao() {
-      // Implementação para gerar relatório de contratação
-    }
-  
-    gerarRelatorioDeSatisfacao() {
-      // Implementação para gerar relatório de satisfação
-    }
-  
-    monitorarServicos() {
-      // Implementação para monitorar serviços
-    }
+  constructor(id, relatorios, notificacoes) {
+    this.id = id;
+    this.relatorios = relatorios || [];
+    this.notificacoes = notificacoes || [];
   }
-  
-  module.exports = Dashboard;
-  
+
+  gerarRelatorioDeContratacao() {
+    console.log('Relatório de contratação gerado.');
+    // Lógica para criar relatório de contratação
+  }
+
+  gerarRelatorioDeSatisfacao() {
+    console.log('Relatório de satisfação gerado.');
+    // Lógica para criar relatório de satisfação
+  }
+
+  monitorarServicos() {
+    console.log('Monitorando serviços...');
+    // Lógica para monitoramento
+  }
+}
+
+module.exports = Dashboard;
