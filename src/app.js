@@ -1,12 +1,12 @@
 const express = require('express');
-//const usuarioRoutes = require('./routes/usuarioRoutes');
+const usuarioRoutes = require('./routes/userRoutes'); // Importe as rotas
 
 const app = express();
 
 // Middleware para trabalhar com JSON
 app.use(express.json());
 
-// Rotas
-//app.use('/api', usuarioRoutes);
+// Conectar as rotas
+app.use('/api', usuarioRoutes); // Rota base será /api/usuarios
 
 module.exports = app;

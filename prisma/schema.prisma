@@ -10,31 +10,79 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URLPOST")
 }
 
 model Usuario {
-  id        Int       @id @default(autoincrement())
-  nome      String
-  email     String    @unique
-  senha     String
-  pagamentos Pagamento[]
-  atendimentos Atendimento[]
+  @@map("usuarios")
+  id       Int         @id @default(autoincrement())
+  nome     String
+  email    String      @unique
+  senha    String
+  fotoPerfil String?   // Opcional
+  Cliente  Cliente?
+  Funcionario Funcionario?
+  Notificacoes Notificacao[]
+}
+
+model Cliente {
+  id        Int      @id @default(autoincrement())
+  endereco  String
+  telefone  String
+  usuarioId Int      @unique
+  Usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+
+  Agendamento Agendamento[]
+}
+
+model Funcionario {
+  id        Int      @id @default(autoincrement())
+  cargo     String
+  usuarioId Int      @unique
+  Usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+}
+
+model Agendamento {
+  id             Int         @id @default(autoincrement())
+  data           DateTime
+  descricaoServico String
+  status         String
+  fotosServico   String[]
+  clienteId      Int
+  Cliente        Cliente     @relation(fields: [clienteId], references: [id])
+  Pagamento      Pagamento?
 }
 
 model Pagamento {
-  id        Int       @id @default(autoincrement())
-  valor     Float
-  data      DateTime  @default(now())
-  usuarioId Int
-  usuario   Usuario   @relation(fields: [usuarioId], references: [id])
+  id             Int       @id @default(autoincrement())
+  valor          Float
+  metodoPagamento String
+  status         String
+  agendamentoId  Int @unique
+  Agendamento    Agendamento @relation(fields: [agendamentoId], references: [id])
 }
 
-model Atendimento {
-  id        Int       @id @default(autoincrement())
-  descricao String
-  data      DateTime  @default(now())
-  usuarioId Int
-  usuario   Usuario   @relation(fields: [usuarioId], references: [id])
+model Notificacao {
+  id            Int      @id @default(autoincrement())
+  tipo          String
+  conteudo      String
+  usuarioId     Int
+  Usuario       Usuario  @relation(fields: [usuarioId], references: [id])
+
+  Dashboard Dashboard[]
+}
+
+model Relatorio {
+  id       Int    @id @default(autoincrement())
+  tipo     String
+  conteudo String
+
+  Dashboard Dashboard[]
+}
+
+model Dashboard {
+  id           Int          @id @default(autoincrement())
+  relatorios   Relatorio[]
+  notificacoes Notificacao[]
 }
 
