@@ -4,8 +4,6 @@ class AgendamentoController {
   constructor() {
     this.agendamentoService = new AgendamentoService();
   }
-
-  // Criar agendamento
   async createAgendamento(req, res) {
     try {
       const data = req.body;
@@ -16,7 +14,6 @@ class AgendamentoController {
     }
   }
 
-  // Obter agendamentos de um cliente
   async getAgendamentosByCliente(req, res) {
     try {
       const clienteId = Number(req.params.clienteId);
@@ -27,7 +24,6 @@ class AgendamentoController {
     }
   }
 
-  // Atualizar agendamento
   async updateAgendamento(req, res) {
     try {
       const id = Number(req.params.id);
@@ -39,12 +35,12 @@ class AgendamentoController {
     }
   }
 
-  // Deletar agendamento
+  
   async deleteAgendamento(req, res) {
     try {
       const id = Number(req.params.id);
       await this.agendamentoService.deleteAgendamento(id);
-      res.status(204).send(); // Sem conteúdo
+      res.status(204).send(); 
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
