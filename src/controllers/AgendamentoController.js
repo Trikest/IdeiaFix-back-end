@@ -4,8 +4,6 @@ class AgendamentoController {
   constructor() {
     this.agendamentoService = new AgendamentoService();
   }
-
-  
   async createAgendamento(req, res) {
     try {
       const data = req.body;
@@ -26,7 +24,6 @@ class AgendamentoController {
     }
   }
 
-  
   async updateAgendamento(req, res) {
     try {
       const id = Number(req.params.id);
