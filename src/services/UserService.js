@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 class UserService {
     constructor(userRepository) {
       this.userRepository = userRepository;
@@ -9,6 +10,8 @@ class UserService {
       if (!userData.email || !userData.senha) {
         throw new Error('Email and password are required');
       }
+      const hashedPassword = await bcrypt.hash(userData.senha, 10);
+      userData.senha = hashedPassword;
       return this.userRepository.createUser(userData);
     }
   
@@ -34,6 +37,23 @@ class UserService {
     async searchUsers(filters) {
         return this.userRepository.searchUsers(filters);
       }
+
+      async validateCredentials(email, senha) {
+        const user = await this.userRepository.getUserByEmail(email);
+
+        if (!user) {
+            throw new Error('Invalid email or password');
+        }
+
+        // Comparar senha fornecida com a hash no banco
+        const isValidPassword = await bcrypt.compare(senha, user.senha);
+        if (!isValidPassword) {
+            throw new Error('Invalid email or password');
+        }
+
+        return user;
+    }
+
   }
   
   module.exports = UserService;
