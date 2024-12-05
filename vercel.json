@@ -1,24 +1,15 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "src/server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "env": {
-    "DATABASE_URL": "your-database-url"  // Adicione sua variável de ambiente DATABASE_URL aqui
-  },
-  "build": {
-    "env": {
-      "PRISMA_GENERATE": "true"
-    },
+    "version": 2,
     "builds": [
       {
         "src": "src/server.js",
         "use": "@vercel/node"
       }
     ],
-    "postBuild": "prisma generate"  // Executa o prisma generate após o build
+    "routes": [
+      {
+        "src": "(.*)",
+        "dest": "src/server.js"
+      }
+    ]
   }
-}
