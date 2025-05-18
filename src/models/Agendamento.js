@@ -1,4 +1,4 @@
-const { Cliente } = require('./usuario'); // Importar a classe Cliente
+//const { Cliente } = require('./usuario'); // Importar a classe Cliente
 
 class Agendamento {
   // Atributos privados

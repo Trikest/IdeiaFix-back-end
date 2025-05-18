@@ -4,14 +4,14 @@ class Usuario {
     #nome;
     #email;
     #senha;
-    #fotoPerfil;
+    #telefone;
   
-    constructor(id, nome, email, senha, fotoPerfil = null) {
+    constructor(id, nome, email, senha, telefone) {
       this.#id = id;
       this.#nome = nome;
       this.#email = email;
       this.#senha = senha;
-      this.#fotoPerfil = fotoPerfil;
+      this.#telefone = telefone;
     }
   
     // Métodos
@@ -37,11 +37,11 @@ class Usuario {
       console.log('Senha redefinida com sucesso.');
     }
   
-    editarPerfil(novoNome, novaFotoPerfil = null) {
+    editarPerfil(novoNome, novaTelefone) {
       // Lógica para editar o perfil
       this.#nome = novoNome;
-      if (novaFotoPerfil) {
-        this.#fotoPerfil = novaFotoPerfil;
+      if (novaTelefone) {
+        this.#telefone = novaTelefone;
       }
       console.log('Perfil atualizado com sucesso.');
     }
@@ -59,8 +59,8 @@ class Usuario {
       return this.#email;
     }
   
-    getFotoPerfil() {
-      return this.#fotoPerfil;
+    getTelefone() {
+      return this.#telefone;
     }
   }
   

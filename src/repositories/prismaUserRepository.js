@@ -10,7 +10,7 @@ class PrismaUserRepository extends IUserRepository {
       nome: data.nome,
       email: data.email,
       senha: data.senha,
-      fotoPerfil: data.fotoPerfil,
+      telefone: data.telefone,
       Cliente: data.Cliente ? { create: { ...data.Cliente } } : undefined,
       Funcionario: data.Funcionario ? { create: { ...data.Funcionario } } : undefined
     }});  // Corrigido para 'usuario' em vez de 'user'

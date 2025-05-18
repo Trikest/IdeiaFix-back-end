@@ -18,8 +18,8 @@ model Usuario {
   id       Int         @id @default(autoincrement())
   nome     String
   email    String      @unique
+  telefone String
   senha    String
-  fotoPerfil String?   // Opcional
   Cliente  Cliente?
   Funcionario Funcionario?
   Notificacoes Notificacao[]
