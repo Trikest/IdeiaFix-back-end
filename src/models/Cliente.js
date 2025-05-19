@@ -1,15 +1,23 @@
 const Usuario = require('./usuario');
 const { Agendamento } = require('./Agendamento');
+const { Endereco } = require('./Endereco');
 
 // Classe Cliente que herda de Usuario
 class Cliente extends Usuario {
-  #endereco;
+  #endereco;       // Instância de Endereco
   #telefone;
-  #agendamentos; // Lista de agendamentos
+  #agendamentos;   // Lista de agendamentos
 
   constructor(id, nome, email, senha, fotoPerfil, endereco, telefone) {
     super(id, nome, email, senha, fotoPerfil);
-    this.#endereco = endereco;
+    
+    // Validação do endereço
+    if (endereco instanceof Endereco) {
+      this.#endereco = endereco;
+    } else {
+      throw new Error('Endereço inválido: deve ser uma instância da classe Endereco.');
+    }
+
     this.#telefone = telefone;
     this.#agendamentos = []; // Inicializa como uma lista vazia
   }
@@ -34,7 +42,6 @@ class Cliente extends Usuario {
     return this.#agendamentos;
   }
 
-  // Outros métodos
   visualizarHistoricoDeContratos() {
     console.log(`Exibindo histórico de contratos do cliente ${this.getNome()}.`);
   }

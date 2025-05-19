@@ -6,14 +6,20 @@ class PrismaUserRepository extends IUserRepository {
     if (!prisma) {
         throw new Error('Prisma client não foi inicializado corretamente.');
       }
-    return prisma.usuario.create({data: {
-      nome: data.nome,
-      email: data.email,
-      senha: data.senha,
-      telefone: data.telefone,
-      Cliente: data.Cliente ? { create: { ...data.Cliente } } : undefined,
-      Funcionario: data.Funcionario ? { create: { ...data.Funcionario } } : undefined
-    }});  // Corrigido para 'usuario' em vez de 'user'
+   return prisma.usuario.create({
+  data: {
+    nome: data.nome,
+    email: data.email,
+    senha: data.senha,
+    telefone: data.telefone,
+    Cliente: data.Cliente ? { create: { ...data.Cliente } } : undefined,
+    Funcionario: data.Funcionario ? { create: { ...data.Funcionario } } : undefined
+  },
+  include: {
+    Cliente: true,
+    Funcionario: true
+  }
+});// Corrigido para 'usuario' em vez de 'user'
   }
 
   async getUserById(id) {

@@ -27,8 +27,7 @@ model Usuario {
 
 model Cliente {
   id        Int      @id @default(autoincrement())
-  endereco  String
-  telefone  String
+  endereco  Endereco[]
   usuarioId Int      @unique
   Usuario   Usuario  @relation(fields: [usuarioId], references: [id])
 
@@ -78,6 +77,17 @@ model Relatorio {
   conteudo String
 
   Dashboard Dashboard[]
+}
+model Endereco {
+  id             Int         @id @default(autoincrement())
+  cep           String
+  rua           String
+  bairro        String
+  complemento   String
+  cidade        String
+  estado        String
+  clienteId      Int
+  Cliente        Cliente     @relation(fields: [clienteId], references: [id])
 }
 
 model Dashboard {
