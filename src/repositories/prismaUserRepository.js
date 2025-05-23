@@ -40,6 +40,12 @@ class PrismaUserRepository extends IUserRepository {
   async deleteUser(id) {
     return prisma.usuario.delete({ where: { id } });  // Corrigido para 'usuario'
   }
+  async updatePassword(id, novaSenhaHash) {
+  return prisma.usuario.update({
+    where: { id },
+    data: { senha: novaSenhaHash }
+  });
+}
 
   async searchUsers(filters) {
     return prisma.usuario.findMany({ where: filters });  // Corrigido para 'usuario'

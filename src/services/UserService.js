@@ -1,4 +1,7 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const transporter = require('../utils/mailer'); // ou defina aqui se não tiver criado ainda
+const SECRET = process.env.JWT_SECRET
 class UserService {
     constructor(userRepository) {
       this.userRepository = userRepository;
@@ -14,7 +17,36 @@ class UserService {
       userData.senha = hashedPassword;
       return this.userRepository.createUser(userData);
     }
-  
+  async sendPasswordResetEmail(email) {
+  const user = await this.userRepository.getUserByEmail(email);
+  if (!user) throw new Error('Usuário não encontrado');
+
+  const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: '15m' });
+
+  const resetLink = `http://localhost:3000/reset-password/${token}`;
+
+  await transporter.sendMail({
+    from: 'Suporte <suporte@seudominio.com>',
+    to: email,
+    subject: 'Recuperação de senha',
+    html: `
+      <h3>Olá,</h3>
+      <p>Clique no link abaixo para redefinir sua senha. O link expira em 15 minutos:</p>
+      <a href="${resetLink}">${resetLink}</a>
+    `
+  });
+}
+async resetPassword(token, newPassword) {
+  let decoded;
+  try {
+    decoded = jwt.verify(token, SECRET);
+  } catch (error) {
+    throw new Error('Token inválido ou expirado');
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  await this.userRepository.updatePassword(decoded.id, hashedPassword);
+}
     async getUserById(id) {
       const user = await this.userRepository.getUserById(id);
       if (!user) {

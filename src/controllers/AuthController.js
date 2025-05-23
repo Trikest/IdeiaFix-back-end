@@ -20,6 +20,16 @@ class AuthController {
             res.status(401).json({ error: error.message });
         }
     }
+    async forgotPassword(req, res) {
+    const { email } = req.body;
+
+    try {
+        await this.userService.sendPasswordResetEmail(email);
+        res.status(200).json({ message: 'E-mail de recuperação enviado com sucesso.' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
 }
 
 module.exports = AuthController;
