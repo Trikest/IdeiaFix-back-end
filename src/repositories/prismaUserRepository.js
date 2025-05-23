@@ -23,7 +23,10 @@ class PrismaUserRepository extends IUserRepository {
   }
 
   async getUserById(id) {
-    return prisma.usuario.findUnique({ where: { id } });  // Corrigido para 'usuario'
+    return prisma.usuario.findUnique({ where: { id }, include: {
+      Cliente: true, // Isso inclui os dados da tabela Cliente vinculada ao usuário
+    } });  // Corrigido para 'usuario'
+    
   }
 
   async getUserByEmail(email) {
