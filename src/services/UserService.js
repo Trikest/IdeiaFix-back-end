@@ -23,7 +23,7 @@ class UserService {
 
   const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: '15m' });
 
-  const resetLink = `http://localhost:3000/reset-password/${token}`;
+  const resetLink = `http://localhost:3000/auth/reset-password/${token}`;
 
   await transporter.sendMail({
     from: 'Suporte <suporte@seudominio.com>',
@@ -36,17 +36,7 @@ class UserService {
     `
   });
 }
-async resetPassword(token, newPassword) {
-  let decoded;
-  try {
-    decoded = jwt.verify(token, SECRET);
-  } catch (error) {
-    throw new Error('Token inválido ou expirado');
-  }
 
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
-  await this.userRepository.updatePassword(decoded.id, hashedPassword);
-}
     async getUserById(id) {
       const user = await this.userRepository.getUserById(id);
       if (!user) {
@@ -85,6 +75,9 @@ async resetPassword(token, newPassword) {
 
         return user;
     }
+    async updatePassword(id, novaSenhaHash) {
+    return this.userRepository.updatePassword(id, novaSenhaHash);
+}
 
   }
   

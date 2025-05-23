@@ -50,6 +50,13 @@ class PrismaUserRepository extends IUserRepository {
   async searchUsers(filters) {
     return prisma.usuario.findMany({ where: filters });  // Corrigido para 'usuario'
   }
+  async updatePassword(id, novaSenhaHash) {
+  return prisma.usuario.update({
+    where: { id },
+    data: { senha: novaSenhaHash }
+  });
+}
+
 }
 
 module.exports = PrismaUserRepository;
