@@ -11,7 +11,7 @@ const cors = require('cors');
 // Middleware para trabalhar com JSON
 app.use(express.json());
 
-// Conectar as rotas
+// Conectar as rotas1
 app.use(cors());
 app.use('/api', usuarioRoutes);
 app.use('/agenda', agendamentosRoutes);
