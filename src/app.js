@@ -3,7 +3,9 @@ const usuarioRoutes = require('./routes/userRoutes'); // Importe as rotas
 const authRoutes = require('./routes/authRoutes');
 const agendamentosRoutes = require('./routes/AgendamentoRoutes')
 const enderecoRoutes = require('./routes/EnderecoRoutes')
-
+const serviceRoutes = require('./routes/servicoRoutes');
+const materialRoutes = require('./routes/materialRoutes');
+const orcamentoRoutes = require('./routes/orcamentoRoutes');
 const notificacaoRoutes = require('./routes/NotificacaoRoutes')
 const app = express();
 const cors = require('cors');
@@ -17,6 +19,9 @@ app.use('/api', usuarioRoutes);
 app.use('/agenda', agendamentosRoutes);
 app.use('/endere', enderecoRoutes);
 app.use('/noti', notificacaoRoutes);
+app.use('/services', serviceRoutes);
+app.use('/materials', materialRoutes);
+app.use('/orcamento', orcamentoRoutes);
 // Rota base será /api/usuarios
 app.use('/auth', authRoutes);
 

@@ -14,59 +14,107 @@ datasource db {
 }
 
 model Usuario {
-  @@map("usuarios")
-  id       Int         @id @default(autoincrement())
-  nome     String
-  email    String      @unique
-  telefone String
-  senha    String
-  Cliente  Cliente?
-  Funcionario Funcionario?
+  id           Int           @id @default(autoincrement())
+  nome         String
+  email        String        @unique
+  telefone     String
+  senha        String
+  Cliente      Cliente?
+  Funcionario  Funcionario?
   Notificacoes Notificacao[]
+
+  @@map("usuarios")
 }
 
 model Cliente {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   endereco  Endereco[]
-  usuarioId Int      @unique
-  Usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int        @unique
+  Usuario   Usuario    @relation(fields: [usuarioId], references: [id])
 
   Agendamento Agendamento[]
+  Orcamento   Orcamento[]
 }
 
 model Funcionario {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   cargo     String
-  usuarioId Int      @unique
-  Usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int     @unique
+  Usuario   Usuario @relation(fields: [usuarioId], references: [id])
+}
+
+model Servico {
+  id          Int         @id @default(autoincrement())
+  nome        String
+  descricao   String?
+  tipoCalculo String // "METRO_QUADRADO", "UNIDADE", "VARIAVEL"
+  imgUrl      String?
+  materiais   Material[]
+  orcamentos  Orcamento[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Material {
+  id         Int         @id @default(autoincrement())
+  nome       String
+  precoMin   Float
+  precoMax   Float
+  servicoId  Int
+  servico    Servico     @relation(fields: [servicoId], references: [id])
+  orcamentos Orcamento[] // <-- adiciona esta linha
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Orcamento {
+  id        Int     @id @default(autoincrement())
+  clienteId Int
+  Cliente   Cliente @relation(fields: [clienteId], references: [id])
+
+  servicoId Int
+  servico   Servico @relation(fields: [servicoId], references: [id])
+
+  materialId Int
+  material   Material @relation(fields: [materialId], references: [id])
+
+  largura       Float
+  altura        Float
+  area          Float
+  precoUnitario Float
+  valorTotal    Float
+  observacoes   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Agendamento {
-  id             Int         @id @default(autoincrement())
-  data           DateTime
+  id               Int        @id @default(autoincrement())
+  data             DateTime
   descricaoServico String
-  status         String
-  fotosServico   String[]
-  clienteId      Int
-  Cliente        Cliente     @relation(fields: [clienteId], references: [id])
-  Pagamento      Pagamento?
+  status           String
+  fotosServico     String[]
+  clienteId        Int
+  Cliente          Cliente    @relation(fields: [clienteId], references: [id])
+  Pagamento        Pagamento?
 }
 
 model Pagamento {
-  id             Int       @id @default(autoincrement())
-  valor          Float
+  id              Int         @id @default(autoincrement())
+  valor           Float
   metodoPagamento String
-  status         String
-  agendamentoId  Int @unique
-  Agendamento    Agendamento @relation(fields: [agendamentoId], references: [id])
+  status          String
+  agendamentoId   Int         @unique
+  Agendamento     Agendamento @relation(fields: [agendamentoId], references: [id])
 }
 
 model Notificacao {
-  id            Int      @id @default(autoincrement())
-  tipo          String
-  conteudo      String
-  usuarioId     Int
-  Usuario       Usuario  @relation(fields: [usuarioId], references: [id])
+  id        Int     @id @default(autoincrement())
+  tipo      String
+  conteudo  String
+  usuarioId Int
+  Usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
   Dashboard Dashboard[]
 }
@@ -78,21 +126,21 @@ model Relatorio {
 
   Dashboard Dashboard[]
 }
+
 model Endereco {
-  id             Int         @id @default(autoincrement())
-  cep           String
-  rua           String
-  bairro        String
-  complemento   String
-  cidade        String
-  estado        String
-  clienteId      Int
-  Cliente        Cliente     @relation(fields: [clienteId], references: [id])
+  id          Int     @id @default(autoincrement())
+  cep         String
+  rua         String
+  bairro      String
+  complemento String
+  cidade      String
+  estado      String
+  clienteId   Int
+  Cliente     Cliente @relation(fields: [clienteId], references: [id])
 }
 
 model Dashboard {
-  id           Int          @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   relatorios   Relatorio[]
   notificacoes Notificacao[]
 }
-
