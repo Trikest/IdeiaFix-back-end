@@ -17,11 +17,12 @@ const authController = new AuthController(userService);
 router.post('/', (req, res) => userController.createUser(req, res)); // Registro
 router.post('/login', (req, res) => authController.login(req, res)); // Login
 router.get('/', (req, res) => userController.getAllUsers(req, res)); // Lista pública
-
+router.get('/segmentar', (req, res) => userController.segmentUsers(req, res));
 // Rotas protegidas
 router.get('/:id', authenticateToken, (req, res) => userController.getUserById(req, res));
 router.put('/:id', authenticateToken, (req, res) => userController.updateUser(req, res));
 router.delete('/:id', authenticateToken, (req, res) => userController.deleteUser(req, res));
 router.get('/search', authenticateToken, (req, res) => userController.searchUsers(req, res));
+
 
 module.exports = router;

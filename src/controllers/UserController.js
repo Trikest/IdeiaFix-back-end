@@ -1,3 +1,5 @@
+const kmeans = require('ml-kmeans');
+const skmeans = require('skmeans');
 class UserController {
     constructor(userService) {
       this.userService = userService;
@@ -68,6 +70,44 @@ class UserController {
         res.status(500).json({ error: error.message });
       }
     }
+
+  
+async segmentUsers(req, res) {
+    try {
+    const clientes = [
+      { nome: 'João', valor: 400, freq: 3 },
+      { nome: 'Ana', valor: 1200, freq: 1 },
+      { nome: 'Carlos', valor: 300, freq: 4 },
+      { nome: 'Bruna', valor: 2000, freq: 1 },
+      { nome: 'Lucas', valor: 350, freq: 2 },
+      { nome: 'Marina', valor: 1000, freq: 1 },
+      { nome: 'Tiago', valor: 250, freq: 5 },
+      { nome: 'Fernanda', valor: 1500, freq: 1 },
+    ];
+
+    const dados = clientes.map(c => [c.valor, c.freq]);
+    console.log('DADOS PARA KMEANS:', dados);
+
+    const K = 3;
+    const resultado = skmeans(dados, K);
+    console.log('RESULTADO DO SKMEANS:', resultado);
+
+    const clientesSegmentados = clientes.map((c, i) => ({
+      ...c,
+      grupo: resultado.idxs[i] // <- aqui está a correção!
+    }));
+
+    return res.json({
+      centros: resultado.centroids,
+      clientes: clientesSegmentados
+    });
+  } catch (error) {
+    console.error('Erro ao segmentar clientes:', error);
+    return res.status(500).json({ error: 'Erro interno ao segmentar clientes' });
+  }
+
+}
+
   }
   
   module.exports = UserController;
