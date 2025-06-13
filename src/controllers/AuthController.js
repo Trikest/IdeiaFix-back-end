@@ -7,15 +7,34 @@ class AuthController {
     }
 
     async login(req, res) {
-        const { email, senha } = req.body;
+         const { email, senha } = req.body;
 
-        try {
-            const user = await this.userService.validateCredentials(email, senha);
-            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            res.status(200).json({ token, user: { id: user.id, email: user.email } });
-        } catch (error) {
-            res.status(401).json({ error: error.message });
-        }
+  try {
+    // 1. Valida credenciais
+    const user = await this.userService.validateCredentials(email, senha);
+
+    // 2. Busca o usuário completo com informações de Cliente e Funcionário
+    const fullUser = await this.userService.getUserByEmail(email);
+
+    // 3. Verifica se é Funcionário
+    if (!fullUser.Funcionario) {
+      return res.status(403).json({ error: 'Acesso permitido apenas para funcionários.' });
+    }
+
+    // 4. Gera o token e responde
+    const token = jwt.sign({ id: fullUser.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(200).json({
+      token,
+      user: {
+        id: fullUser.id,
+        email: fullUser.email,
+        Funcionario: fullUser.Funcionario
+      }
+    });
+  } catch (error) {
+    res.status(401).json({ error: error.message });
+  }
     }
 
     async forgotPassword(req, res) {

@@ -7,6 +7,7 @@ const serviceRoutes = require('./routes/servicoRoutes');
 const materialRoutes = require('./routes/materialRoutes');
 const orcamentoRoutes = require('./routes/orcamentoRoutes');
 const notificacaoRoutes = require('./routes/NotificacaoRoutes')
+const funcionarioRoutes = require('./routes/funcionarioRoutes')
 const app = express();
 const cors = require('cors');
 
@@ -22,6 +23,7 @@ app.use('/noti', notificacaoRoutes);
 app.use('/services', serviceRoutes);
 app.use('/materials', materialRoutes);
 app.use('/orcamento', orcamentoRoutes);
+app.use('/funcio',funcionarioRoutes);
 // Rota base será /api/usuarios
 app.use('/auth', authRoutes);
 
