@@ -37,6 +37,17 @@ class AuthController {
   }
     }
 
+     async loginc(req, res) {
+        const { email, senha } = req.body;
+        try {
+            const user = await this.userService.validateCredentials(email, senha);
+            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            res.status(200).json({ token, user: { id: user.id, email: user.email } });
+        } catch (error) {
+            res.status(401).json({ error: error.message });
+        }
+      }
+
     async forgotPassword(req, res) {
         const { email } = req.body;
 

@@ -15,7 +15,8 @@ const authController = new AuthController(userService);
 
 // Rotas públicas
 router.post('/', (req, res) => userController.createUser(req, res)); // Registro
-router.post('/login', (req, res) => authController.login(req, res)); // Login
+router.post('/login', (req, res) => authController.login(req, res)); 
+router.post('/loginc', (req, res) => authController.loginc(req, res));// Login
 router.get('/', (req, res) => userController.getAllUsers(req, res)); // Lista pública
 router.get('/segmentar', (req, res) => userController.segmentUsers(req, res));
 // Rotas protegidas
