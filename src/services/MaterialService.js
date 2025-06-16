@@ -6,7 +6,8 @@ class MaterialService {
   }
 
   async criarMaterial(data) {
-    if (!data.nome || !data.tipo || !data.precoMetro) {
+    if (!data) {
+      
       throw new Error('Dados obrigatórios ausentes para criar material.');
     }
     return await this.materialRepository.criarMaterial(data);

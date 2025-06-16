@@ -68,26 +68,40 @@ model Material {
 }
 
 model Orcamento {
-  id        Int     @id @default(autoincrement())
-  clienteId Int
-  Cliente   Cliente @relation(fields: [clienteId], references: [id])
+  id              Int              @id @default(autoincrement())
+  clienteId       Int
+  Cliente         Cliente          @relation(fields: [clienteId], references: [id])
 
-  servicoId Int
-  servico   Servico @relation(fields: [servicoId], references: [id])
+  servicoId       Int
+  servico         Servico          @relation(fields: [servicoId], references: [id])
 
-  materialId Int
-  material   Material @relation(fields: [materialId], references: [id])
+  materialId      Int
+  material        Material         @relation(fields: [materialId], references: [id])
 
-  largura       Float
-  altura        Float
-  area          Float
-  precoUnitario Float
-  valorTotal    Float
-  observacoes   String?
+  largura         Float
+  unidadeLargura  String           // Ex: "mm", "cm", "m"
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  altura          Float
+  unidadeAltura   String           // Ex: "mm", "cm", "m"
+
+  precoUnitario   Float
+  valorTotal      Float
+  dataServico   DateTime         // <-- novo campo
+  horaServico   String 
+  observacoes     String?
+  dadosExtras     Json?
+
+  status          StatusOrcamento @default(PENDENTE)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 }
+enum StatusOrcamento {
+  PENDENTE
+  CONFIRMADO
+  CANCELADO
+  REJEITADO
+}
+
 
 model Agendamento {
   id               Int        @id @default(autoincrement())

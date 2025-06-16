@@ -14,6 +14,7 @@ class OrcamentoController {
       const orcamento = await this.orcamentoService.criarOrcamento(req.body);
       res.status(201).json(orcamento);
     } catch (error) {
+      console.log(req.body)
       res.status(400).json({ error: error.message });
     }
   }
@@ -27,7 +28,15 @@ class OrcamentoController {
       res.status(400).json({ error: error.message });
     }
   }
-
+    async getOrcamentosByCliente(req, res) {
+    try {
+      const clienteId = Number(req.params.clienteId);
+      const orcamentos = await this.orcamentoService.getOrcamentosByCliente(clienteId);
+      res.status(200).json(orcamentos);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
   // Buscar orçamento por ID
   async buscarOrcamentoPorId(req, res) {
     try {

@@ -1,11 +1,14 @@
 const express = require('express');
 const OrcamentoController = require('../controllers/OrcamentoController');
 const router = express.Router();
+const authenticateToken = require('../middlewares/authenticateToken');
 
 const orcamentoController = new OrcamentoController();
 
 // Criar orçamento
-router.post('/', (req, res) => orcamentoController.criarOrcamento(req, res));
+router.post('/',authenticateToken, (req, res) => orcamentoController.criarOrcamento(req, res));
+// router.js
+router.get('/cliente/:clienteId', (req, res) => orcamentoController.getOrcamentosByCliente(req, res));
 
 // Listar todos os orçamentos
 router.get('/', (req, res) => orcamentoController.listarOrcamentos(req, res));

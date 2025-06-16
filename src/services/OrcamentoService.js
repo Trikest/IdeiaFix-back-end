@@ -6,28 +6,24 @@ class OrcamentoService {
   }
 
   async criarOrcamento(data) {
-    console.log('Dados recebidos:', data);
-
+    
     if (
       data.clienteId == null ||
-      data.servicoId == null ||
-      data.materialId == null ||
-      data.largura == null ||
-      data.altura == null ||
-      data.area == null ||
-      data.precoUnitario == null ||
-      data.valorTotal == null
+      data.servicoId == null
     ) {
       throw new Error('Dados incompletos para criar orçamento.');
     }
 
+     
     return await this.orcamentoRepository.criarOrcamento(data);
   }
 
   async listarOrcamentos() {
     return await this.orcamentoRepository.listarOrcamentos();
   }
-
+ async getOrcamentosByCliente(clienteId) {
+    return await this.orcamentoRepository.getOrcamentosByCliente(clienteId);
+  }
   async buscarOrcamentoPorId(id) {
     const orcamento = await this.orcamentoRepository.buscarOrcamentoPorId(id);
     if (!orcamento) {
