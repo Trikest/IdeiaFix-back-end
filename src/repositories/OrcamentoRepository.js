@@ -83,10 +83,13 @@ class OrcamentoRepository {
           area: data.area,
           precoUnitario: data.precoUnitario,
           valorTotal: data.valorTotal,
+          status: data.status,
           observacoes: data.observacoes || null,
+
         },
       });
     } catch (error) {
+      
       throw new Error('Erro ao atualizar orçamento: ' + error.message);
     }
   }
