@@ -60,7 +60,12 @@ class OrcamentoRepository {
       return await prisma.orcamento.findUnique({
         where: { id },
         include: {
-          Cliente: true,
+          Cliente: {
+          include: {
+            endereco: true,
+            Usuario:true, // Inclui o endereço do cliente
+          },
+        },
           servico: true,
           material: true,
         },
